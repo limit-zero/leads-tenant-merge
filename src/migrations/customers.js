@@ -3,6 +3,8 @@ const createDupeMapper = require('../utils/create-dupe-mapper');
 
 const { log } = console;
 
+const dupeMapper = createDupeMapper();
+
 const updateCustomers = async () => {
   log('Setting migration data to DDT customers...');
 
@@ -39,7 +41,6 @@ const updateCustomers = async () => {
 
 const updateCampaigns = async () => {
   log('Updating `customerId` on campaigns...');
-  const dupeMapper = createDupeMapper();
   const customerMap = await dupeMapper('customers');
   const ddtCustomerIds = [...customerMap.values()].map(({ ddtId }) => ddtId);
 
@@ -62,7 +63,32 @@ const updateCampaigns = async () => {
   log('Campaign update complete.');
 };
 
+const updateExtractedHosts = async () => {
+  log('Updating `customerId` on extracted hosts...');
+  const customerMap = await dupeMapper('customers');
+  const ddtCustomerIds = [...customerMap.values()].map(({ ddtId }) => ddtId);
+
+  const hostCursor = db.collection('ddt', 'extracted-hosts').find({ customerId: { $in: ddtCustomerIds } }, {
+    projection: { customerId: 1 },
+  });
+  const n = await hostCursor.count();
+  log(`Found ${n} hosts to update.`);
+
+  const bulkOps = [];
+  await db.iterateCursor(hostCursor, (host) => {
+    const { ienId } = customerMap.get(`${host.customerId}`);
+    const $set = { 'migrate.fields.customerId': ienId };
+    const updateOne = { filter: { _id: host._id }, update: { $set } };
+    bulkOps.push({ updateOne });
+  });
+  log('Writing data...');
+  if (bulkOps.length) await db.collection('ddt', 'extracted-hosts').bulkWrite(bulkOps);
+  await hostCursor.close();
+  log('Extracted host update complete.');
+};
+
 module.exports = async () => {
   await updateCustomers();
   await updateCampaigns();
+  await updateExtractedHosts();
 };
