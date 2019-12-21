@@ -1,5 +1,6 @@
 const db = require('../db');
 const createDupeMapper = require('../utils/create-dupe-mapper');
+const updateRefOne = require('../utils/update-ref-one');
 
 const { log } = console;
 
@@ -40,51 +41,21 @@ const updateCustomers = async () => {
 };
 
 const updateCampaigns = async () => {
-  log('Updating `customerId` on campaigns...');
   const customerMap = await dupeMapper('customers');
-  const ddtCustomerIds = [...customerMap.values()].map(({ ddtId }) => ddtId);
-
-  const campaignCursor = db.collection('ddt', 'campaigns').find({ customerId: { $in: ddtCustomerIds } }, {
-    projection: { customerId: 1 },
+  await updateRefOne({
+    resource: 'campaigns',
+    field: 'customerId',
+    dupeMap: customerMap,
   });
-  const n = await campaignCursor.count();
-  log(`Found ${n} campaigns to update.`);
-
-  const bulkOps = [];
-  await db.iterateCursor(campaignCursor, (campaign) => {
-    const { ienId } = customerMap.get(`${campaign.customerId}`);
-    const $set = { 'migrate.fields.customerId': ienId };
-    const updateOne = { filter: { _id: campaign._id }, update: { $set } };
-    bulkOps.push({ updateOne });
-  });
-  log('Writing data...');
-  if (bulkOps.length) await db.collection('ddt', 'campaigns').bulkWrite(bulkOps);
-  await campaignCursor.close();
-  log('Campaign update complete.');
 };
 
 const updateExtractedHosts = async () => {
-  log('Updating `customerId` on extracted hosts...');
   const customerMap = await dupeMapper('customers');
-  const ddtCustomerIds = [...customerMap.values()].map(({ ddtId }) => ddtId);
-
-  const hostCursor = db.collection('ddt', 'extracted-hosts').find({ customerId: { $in: ddtCustomerIds } }, {
-    projection: { customerId: 1 },
+  await updateRefOne({
+    resource: 'extracted-hosts',
+    field: 'customerId',
+    dupeMap: customerMap,
   });
-  const n = await hostCursor.count();
-  log(`Found ${n} hosts to update.`);
-
-  const bulkOps = [];
-  await db.iterateCursor(hostCursor, (host) => {
-    const { ienId } = customerMap.get(`${host.customerId}`);
-    const $set = { 'migrate.fields.customerId': ienId };
-    const updateOne = { filter: { _id: host._id }, update: { $set } };
-    bulkOps.push({ updateOne });
-  });
-  log('Writing data...');
-  if (bulkOps.length) await db.collection('ddt', 'extracted-hosts').bulkWrite(bulkOps);
-  await hostCursor.close();
-  log('Extracted host update complete.');
 };
 
 module.exports = async () => {
