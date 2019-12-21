@@ -1,11 +1,11 @@
 const eachSeries = require('async/eachSeries');
 const db = require('./db');
-const segments = require('./segments');
+const migrations = require('./migrations');
 
 const { log } = console;
 const { keys } = Object;
 
-const segmentsToRun = {
+const migrationsToRun = {
   tags: true,
 };
 
@@ -13,10 +13,10 @@ const run = async () => {
   await db.connect();
   log('Databases connected.');
 
-  await eachSeries(keys(segments).filter(key => segmentsToRun[key]), async (key) => {
-    log(`Segment "${key}" starting...`);
-    await segments[key]();
-    log(`Segment "${key}" complete.`);
+  await eachSeries(keys(migrations).filter(key => migrationsToRun[key]), async (key) => {
+    log(`Migration "${key}" starting...`);
+    await migrations[key]();
+    log(`Migration "${key}" complete.`);
   });
 
   await db.close();
