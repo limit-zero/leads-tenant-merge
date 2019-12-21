@@ -1,6 +1,6 @@
 const db = require('../db');
 const createDupeMapper = require('../utils/create-dupe-mapper');
-const updateRefOne = require('../utils/update-ref-one');
+const updateRefs = require('../utils/update-refs');
 
 const { log } = console;
 
@@ -42,7 +42,7 @@ const updateCustomers = async () => {
 
 const updateCampaigns = async () => {
   const customerMap = await dupeMapper('customers');
-  await updateRefOne({
+  await updateRefs.one({
     resource: 'campaigns',
     field: 'customerId',
     dupeMap: customerMap,
@@ -51,7 +51,7 @@ const updateCampaigns = async () => {
 
 const updateExtractedHosts = async () => {
   const customerMap = await dupeMapper('customers');
-  await updateRefOne({
+  await updateRefs.one({
     resource: 'extracted-hosts',
     field: 'customerId',
     dupeMap: customerMap,

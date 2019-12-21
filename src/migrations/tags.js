@@ -1,7 +1,10 @@
 const db = require('../db');
 const createDupeMapper = require('../utils/create-dupe-mapper');
+const updateRefs = require('../utils/update-refs');
 
 const { log } = console;
+
+const dupeMapper = createDupeMapper();
 
 const updateTags = async () => {
   log('Setting migration data to DDT tags...');
@@ -35,34 +38,12 @@ const updateTags = async () => {
 };
 
 const updateExtractedUrls = async () => {
-  log('Updating `tagIds` on extracted URLs...');
-  const dupeMapper = createDupeMapper();
   const tagMap = await dupeMapper('tags');
-  const ddtTagIds = [...tagMap.values()].map(({ ddtId }) => ddtId);
-
-  const urlCursor = db.collection('ddt', 'extracted-urls').find({ tagIds: { $in: ddtTagIds } }, {
-    projection: { tagIds: 1 },
+  await updateRefs.many({
+    resource: 'extracted-urls',
+    field: 'tagIds',
+    dupeMap: tagMap,
   });
-  const n = await urlCursor.count();
-  log(`Found ${n} URLs to update.`);
-
-  const bulkOps = [];
-  await db.iterateCursor(urlCursor, (url) => {
-    const newTagIds = url.tagIds.map((tagId) => {
-      const ids = tagMap.get(`${tagId}`);
-      if (ids) {
-        return ids.ienId;
-      }
-      return tagId;
-    });
-    const $set = { 'migrate.fields.tagIds': newTagIds };
-    const updateOne = { filter: { _id: url._id }, update: { $set } };
-    bulkOps.push({ updateOne });
-  });
-  log('Writing data...');
-  if (bulkOps.length) await db.collection('ddt', 'extracted-urls').bulkWrite(bulkOps);
-  await urlCursor.close();
-  log('Extracted URL update complete.');
 };
 
 module.exports = async () => {
