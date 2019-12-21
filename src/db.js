@@ -18,7 +18,15 @@ const close = force => Promise.all([
   clients.ien.close(force),
 ]);
 
+const collection = (tenant, name) => {
+  const client = clients[tenant];
+  if (!client) throw new Error('No mongodb client found for the provided tenant');
+  const dbName = tenant === 'ien' ? 'leads-graph' : 'leads-graph-ddt';
+  return client.db(dbName).collection(name);
+};
+
 module.exports = {
   connect,
   close,
+  collection,
 };
