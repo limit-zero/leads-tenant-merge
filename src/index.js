@@ -1,17 +1,23 @@
+const eachSeries = require('async/eachSeries');
 const db = require('./db');
+const segments = require('./segments');
 
 const { log } = console;
+const { keys } = Object;
+
+const segmentsToRun = {
+  tags: true,
+};
 
 const run = async () => {
   await db.connect();
   log('Databases connected.');
 
-  const [c1, c2] = await Promise.all([
-    db.collection('ien', 'tags').countDocuments(),
-    db.collection('ddt', 'tags').countDocuments(),
-  ]);
-
-  log({ c1, c2 });
+  await eachSeries(keys(segments).filter(key => segmentsToRun[key]), async (key) => {
+    log(`Segment "${key}" starting...`);
+    await segments[key]();
+    log(`Segment "${key}" complete.`);
+  });
 
   await db.close();
   log('DONE!');
