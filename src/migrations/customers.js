@@ -58,8 +58,18 @@ const updateExtractedHosts = async () => {
   });
 };
 
+const updateExtractedUrls = async () => {
+  const customerMap = await dupeMapper('customers');
+  await updateRefs.one({
+    resource: 'extracted-urls',
+    field: 'customerId',
+    dupeMap: customerMap,
+  });
+};
+
 module.exports = async () => {
   await updateCustomers();
   await updateCampaigns();
   await updateExtractedHosts();
+  await updateExtractedUrls();
 };
