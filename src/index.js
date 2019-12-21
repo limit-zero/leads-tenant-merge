@@ -6,7 +6,8 @@ const { log } = console;
 const { keys } = Object;
 
 const migrationsToRun = {
-  tags: true,
+  tags: false,
+  customers: true,
 };
 
 const run = async () => {
