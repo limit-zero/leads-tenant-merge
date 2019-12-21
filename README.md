@@ -42,11 +42,9 @@
 - 239 ddt records
 - unique index on `key` field (when not deleted)
 - when a duplicate key is found, merge with IEN customer
-- relationships {
+- relationships
   - parentId
     -  0 records
-
-}
 - models that reference this
   - campaign
   - extracted-host
