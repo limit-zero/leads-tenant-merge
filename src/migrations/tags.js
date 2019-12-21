@@ -88,6 +88,7 @@ const updateExtractedUrls = async () => {
   });
   log('Writing data...');
   if (bulkOps.length) await db.collection('ddt', 'extracted-urls').bulkWrite(bulkOps);
+  await urlCursor.close();
   log('Extracted URL Update complete.');
 };
 
