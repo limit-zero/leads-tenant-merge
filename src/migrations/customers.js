@@ -1,4 +1,5 @@
 const db = require('../db');
+const createDupeMapper = require('../utils/create-dupe-mapper');
 
 const { log } = console;
 
@@ -36,6 +37,32 @@ const updateCustomers = async () => {
   log('DDT migration data set.');
 };
 
+const updateCampaigns = async () => {
+  log('Updating `customerId` on campaigns...');
+  const dupeMapper = createDupeMapper();
+  const customerMap = await dupeMapper('customers');
+  const ddtCustomerIds = [...customerMap.values()].map(({ ddtId }) => ddtId);
+
+  const campaignCursor = db.collection('ddt', 'campaigns').find({ customerId: { $in: ddtCustomerIds } }, {
+    projection: { customerId: 1 },
+  });
+  const n = await campaignCursor.count();
+  log(`Found ${n} campaigns to update.`);
+
+  const bulkOps = [];
+  await db.iterateCursor(campaignCursor, (campaign) => {
+    const { ienId } = customerMap.get(`${campaign.customerId}`);
+    const $set = { 'migrate.fields.customerId': ienId };
+    const updateOne = { filter: { _id: campaign._id }, update: { $set } };
+    bulkOps.push({ updateOne });
+  });
+  log('Writing data...');
+  if (bulkOps.length) await db.collection('ddt', 'campaigns').bulkWrite(bulkOps);
+  await campaignCursor.close();
+  log('Campaign update complete.');
+};
+
 module.exports = async () => {
   await updateCustomers();
+  await updateCampaigns();
 };
