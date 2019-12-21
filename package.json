@@ -1,0 +1,20 @@
+{
+  "name": "@limit-zero/leads-tenant-merge",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/limit-zero/leads-tenant-merge.git",
+  "author": "Jacob Bare <jacob@limit0.io>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@base-cms/env": "^1.0.0",
+    "@base-cms/object-path": "^1.0.0",
+    "@base-cms/utils": "^1.0.0",
+    "mongodb": "^3.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.19.1"
+  }
+}
