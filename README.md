@@ -129,7 +129,7 @@
   - tagIds
     - 0 hosts with this field set
 - models that reference this
-  - extracted-url
+  - [x] extracted-url
 
 ## extracted-urls
 - 6,137 ddt records
