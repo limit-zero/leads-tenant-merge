@@ -68,7 +68,7 @@
   - [x] email-send-url
   - line-item (can be ignored, no data)
 
-## email-deployments
+## email-deployments (done)
 - 721 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
@@ -76,8 +76,8 @@
     - 721 deployments with this field set
     - 20 distinct categoryIds
 - models that reference this
-  - email-send-url
-  - email-send
+  - [x] email-send-url
+  - [x] email-send
 
 ## email-send-urls
 - 31,230 ddt records
@@ -92,16 +92,16 @@
   - urlId
     - 5,114 distinct urlIds
 
-## email-sends
+## email-sends (done)
 - 1,308 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
   - deploymentId
     - 721 distinct deploymentIds
 - models that reference this
-  - campaign
-  - email-send-url
-  - event-email-click
+  - [x] campaign
+  - [x] email-send-url
+  - [x] event-email-click
   - line-item (can be ignored, no data)
 
 ## errors (done)

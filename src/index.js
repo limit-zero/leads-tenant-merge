@@ -16,7 +16,9 @@ const migrationsToRun = {
   urlAcknowledgments: false,
   campaigns: false,
   identities: false,
-  emailCategories: true,
+  emailCategories: false,
+  emailDeployments: true,
+  emailSends: true,
 };
 
 const run = async () => {

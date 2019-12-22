@@ -9,6 +9,8 @@ const urlAcknowledgments = require('./url-acknowledgments');
 const campaigns = require('./campaigns');
 const identities = require('./identities');
 const emailCategories = require('./email-categories');
+const emailDeployments = require('./email-deployments');
+const emailSends = require('./email-sends');
 
 module.exports = {
   tags,
@@ -22,4 +24,6 @@ module.exports = {
   campaigns,
   identities,
   emailCategories,
+  emailDeployments,
+  emailSends,
 };
