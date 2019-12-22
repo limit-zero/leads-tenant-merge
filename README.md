@@ -46,12 +46,12 @@
   - parentId
     -  0 records
 - models that reference this
-  - campaign
-  - extracted-host
-  - extracted-url
+  - [x] campaign
+  - [x] extracted-host
+  - [x] extracted-url
   - form (can be ignored, no data)
   - identity (can be ignored, no data)
-  - order
+  - [x] order
 
 ## email-categories
 - 22 ddt records
@@ -147,7 +147,7 @@
 - models that reference this
   - campaign
   - [x] email-send-url
-  - event-email-click
+  - [x] event-email-click
   - line-item (can ignore, no data)
   - [x] url-acknowledgment
 
