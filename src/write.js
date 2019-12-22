@@ -1,11 +1,26 @@
 const eachSeries = require('async/eachSeries');
+const chalk = require('chalk');
 const db = require('./db');
 
 const { log } = console;
 const { keys } = Object;
 
 const collectonsToRun = [
-  'tags',
+  // 'campaigns',
+  // 'customers',
+  // 'email-categories',
+  // 'email-deployments',
+  'email-send-urls',
+  // 'email-sends',
+  // 'event-email-clicks',
+  // 'extracted-hosts',
+  // 'extracted-urls',
+  // 'identities',
+  // 'line-items',
+  // 'orders',
+  // 'tags',
+  // 'url-acknowledgments',
+  // 'users',
 ];
 
 const run = async () => {
@@ -13,7 +28,8 @@ const run = async () => {
   log('Databases connected.');
 
   await eachSeries(collectonsToRun, async (collName) => {
-    log(`Writing data for the "${collName}" collection...`);
+    log('');
+    log(chalk`Writing data for the {blue ${collName}} collection...`);
 
     const filter = {
       'migrate.action': 'insert',
@@ -29,7 +45,7 @@ const run = async () => {
       skips.push(i * batchSize);
     }
 
-    log(`Found ${numOfDocs} total ${collName}. Running ${batchCount} batches...`);
+    log(chalk`Found {yellow ${numOfDocs}} total ${collName}. Running {yellow ${batchCount}} batches...`);
     await eachSeries(skips, async (skip) => {
       log('Batch starting...');
       const cursor = db.collection('ddt', collName).find(filter, { limit: batchSize, skip });
@@ -51,16 +67,18 @@ const run = async () => {
         const updateOne = { filter: { _id: doc._id }, update: { $set } };
         bulkUpdateOps.push({ updateOne });
       });
-      log('Inserting docs into IEN...');
+      log(chalk`{gray Inserting docs into IEN...}`);
       await db.collection('ien', collName).bulkWrite(bulkInsertOps);
-      log('Flagging DDT docs as migrated...');
+      log(chalk`{gray Flagging DDT docs as migrated...}`);
       await db.collection('ddt', collName).bulkWrite(bulkUpdateOps);
 
       await cursor.close();
       log('Batch complete.');
     });
 
-    log(`Write for "${collName}" complete.`);
+
+    log(chalk`Write for {blue ${collName}} {green complete}.`);
+    log('');
   });
 
   await db.close();
