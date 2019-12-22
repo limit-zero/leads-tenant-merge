@@ -12,6 +12,7 @@ const emailCategories = require('./email-categories');
 const emailDeployments = require('./email-deployments');
 const emailSends = require('./email-sends');
 const emailSendUrls = require('./email-send-urls');
+const eventEmailClicks = require('./event-email-clicks');
 
 module.exports = {
   tags,
@@ -28,4 +29,5 @@ module.exports = {
   emailDeployments,
   emailSends,
   emailSendUrls,
+  eventEmailClicks,
 };
