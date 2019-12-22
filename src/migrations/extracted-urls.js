@@ -68,9 +68,40 @@ const updateEventEmailClicks = async () => {
   });
 };
 
+const updateCampaigns = async () => {
+  const urlMap = await dupeMapper('extracted-urls');
+
+  const ddtIds = [...urlMap.values()].map(({ ddtId }) => ddtId);
+
+  const filter = { 'email.excludeUrls.urlId': { $in: ddtIds } };
+  const projection = { 'email.excludeUrls': 1 };
+  const cursor = db.collection('ddt', 'campaigns').find(filter, { projection });
+
+  const n = await cursor.count();
+  log(`Found ${n} campaigns to update.`);
+
+  const bulkOps = [];
+  await db.iterateCursor(cursor, (doc) => {
+    const newRefs = doc.email.excludeUrls.map((ref) => {
+      const ids = urlMap.get(`${ref.urlId}`);
+      if (ids) return { ...ref, urlId: ids.ienId };
+      return ref;
+    });
+    const $set = { 'migrate.fields.email.excludeUrls': newRefs };
+    const updateOne = { filter: { _id: doc._id }, update: { $set } };
+    bulkOps.push({ updateOne });
+  });
+
+  log('Writing data...');
+  if (bulkOps.length) await db.collection('ddt', 'campaigns').bulkWrite(bulkOps);
+  await cursor.close();
+  log('Update complete for campaigns.email.excludeUrls');
+};
+
 module.exports = async () => {
   await updateExtractedUrls();
   await updateEmailSendUrls();
   await updateUrlAcknowledgments();
   await updateEventEmailClicks();
+  await updateCampaigns();
 };

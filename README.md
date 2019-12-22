@@ -1,6 +1,6 @@
 # Models / Collections
 
-[ ] Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
+[x] Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
 
 ## ad-creative-trackers (done)
 - no ddt data
@@ -34,7 +34,7 @@
 - models that reference this
   - identity (can be ignored, no data)
 
-## click-requests
+## click-requests (done)
 - can likely ignore
 
 ## content-query-results (done)
@@ -110,7 +110,7 @@
 ## event-ad-creatives (done)
 - no ddt data
 
-## event-email-clicks
+## event-email-clicks (done)
 - 458,689 ddt records
 - unique index on `day`, `job`, `url`, `usr`
 - relationships
@@ -133,7 +133,7 @@
 - models that reference this
   - [x] extracted-url
 
-## extracted-urls
+## extracted-urls (done)
 - 6,137 ddt records
 - unique index on `shortId`
 - unique index on `values.original`
@@ -147,7 +147,7 @@
   - tagIds
     - 4,649 urls with this field set
 - models that reference this
-  - campaign
+  - [x] campaign
   - [x] email-send-url
   - [x] event-email-click
   - line-item (can ignore, no data)

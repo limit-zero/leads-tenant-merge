@@ -20,7 +20,7 @@ const migrationsToRun = {
   emailDeployments: false,
   emailSends: false,
   emailSendUrls: false,
-  eventEmailClicks: true,
+  eventEmailClicks: false,
 };
 
 const run = async () => {
