@@ -14,7 +14,7 @@ const updateIdentities = async () => {
 
   const projection = { 'externalSource.identifier': 1 };
 
-  const ddtIdentities = await db.collection('ddt', 'identities').find({ deleted: { $ne: true } }, { projection }).toArray();
+  const ddtIdentities = await db.collection('ddt', 'identities').find({}, { projection }).toArray();
   const ddtIdentifiers = ddtIdentities.map(({ externalSource }) => externalSource.identifier);
 
   const ienIdentities = await db.collection('ien', 'identities').find({
