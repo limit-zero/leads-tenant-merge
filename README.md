@@ -79,7 +79,7 @@
   - [x] email-send-url
   - [x] email-send
 
-## email-send-urls
+## email-send-urls (done)
 - 31,230 ddt records
 - unique key on sendId, urlId
 - relationships

@@ -11,6 +11,7 @@ const identities = require('./identities');
 const emailCategories = require('./email-categories');
 const emailDeployments = require('./email-deployments');
 const emailSends = require('./email-sends');
+const emailSendUrls = require('./email-send-urls');
 
 module.exports = {
   tags,
@@ -26,4 +27,5 @@ module.exports = {
   emailCategories,
   emailDeployments,
   emailSends,
+  emailSendUrls,
 };
