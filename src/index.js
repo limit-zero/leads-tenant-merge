@@ -14,6 +14,7 @@ const migrationsToRun = {
   orders: true,
   lineItems: true,
   urlAcknowledgments: true,
+  campaigns: true,
 };
 
 const run = async () => {
