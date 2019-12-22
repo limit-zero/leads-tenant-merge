@@ -2,16 +2,16 @@
 
 Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
 
-## ad-creative-trackers
+## ad-creative-trackers (done)
 - no ddt data
 
-## ad-creatives
+## ad-creatives (done)
 - no ddt data
 
-## behavior-entities
+## behavior-entities (done)
 - no ddt data
 
-## behavior-views
+## behavior-views (done)
 - no ddt data
 
 ## campaigns
@@ -37,7 +37,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 ## click-requests
 - can likely ignore
 
-## content-query-results
+## content-query-results (done)
 - can ignore
 
 ## customers (done)
@@ -104,10 +104,10 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
   - event-email-click
   - line-item (can be ignored, no data)
 
-## errors
+## errors (done)
 - can likely ignore
 
-## event-ad-creatives
+## event-ad-creatives (done)
 - no ddt data
 
 ## event-email-clicks
@@ -118,7 +118,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
   - usr (identityId)
   - job (sendId)
 
-## excluded-email-domains
+## excluded-email-domains (done)
 - no ddt data
 
 ## extracted-hosts (done)
@@ -153,13 +153,13 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
   - line-item (can ignore, no data)
   - [x] url-acknowledgment
 
-## form-entries
+## form-entries (done)
 - no ddt data
 
-## forms
+## forms (done)
 - no ddt data
 
-## honey-pots
+## honey-pots (done)
 - can likely ignore
 
 ## identities
@@ -205,7 +205,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 - models that reference this
   - line-item
 
-## pings
+## pings (done)
 - can ignore
 
 ## tags (done)
@@ -214,10 +214,10 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 - models that reference this
   - campaign (can ignore, no data)
   - extracted-host (can ignore, no data)
-  - extracted-url
+  - [x] extracted-url
   - line-item (can ignore, no data)
 
-## tracked-campaigns
+## tracked-campaigns (done)
 - no ddt data
 
 ## url-acknowledgments
@@ -226,12 +226,12 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 - relationships
   - urlIds
 
-## users
+## users (done)
 - 18 ddt records
 - unique index on `email` (when not deleted)
 - merge with ien records
 - models that reference this
-  - order
+  - [x] order
 
-## videos
+## videos (done)
 - no ddt data
