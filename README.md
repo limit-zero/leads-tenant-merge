@@ -77,7 +77,7 @@
   - email-send-url
   - email-send
 
-# email-send-urls
+## email-send-urls
 - 31,230 ddt records
 - unique key on sendId, urlId
 - relationships
@@ -90,7 +90,7 @@
   - urlId
     - 5,114 distinct urlIds
 
-# email-sends
+## email-sends
 - 1,308 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
@@ -102,13 +102,13 @@
   - event-email-click
   - line-item (can be ignored, no data)
 
-# errors
+## errors
 - can likely ignore
 
-# event-ad-creatives
+## event-ad-creatives
 - no ddt data
 
-# event-email-clicks
+## event-email-clicks
 - 458,689 ddt records
 - unique index on `day`, `job`, `url`, `usr`
 - relationships
@@ -116,10 +116,10 @@
   - usr (identityId)
   - job (sendId)
 
-# excluded-email-domains
+## excluded-email-domains
 - no ddt data
 
-# extracted-hosts
+## extracted-hosts
 - 129 ddt records
 - unique index on `value`
 - relationships
@@ -160,7 +160,7 @@
 ## honey-pots
 - can likely ignore
 
-# identities
+## identities
 - 21,871 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - need to determine how to handle "duplicate" email addresses
@@ -174,7 +174,7 @@
 - models that reference this
   - event-email-click
 
-# line-items
+## line-items
 - 3 ddt records
 - relationships
   - orderId
@@ -191,7 +191,7 @@
 - models that reference this
   - identity (can ignore, no data)
 
-# orders
+## orders
 - 3 ddt records
 - relationships
   - customerId
@@ -203,10 +203,10 @@
 - models that reference this
   - line-item
 
-# pings
+## pings
 - can ignore
 
-# tags
+## tags
 - 5 ddt records
 - unique index on `name` (when not deleted)
 - models that reference this
@@ -215,21 +215,21 @@
   - extracted-url
   - line-item (can ignore, no data)
 
-# tracked-campaigns
+## tracked-campaigns
 - no ddt data
 
-# url-acknowledgments
+## url-acknowledgments
 - 757 ddt records
 - unique index on `shortId`
 - relationships
   - urlIds
 
-# users
+## users
 - 18 ddt records
 - unique index on `email` (when not deleted)
 - merge with ien records
 - models that reference this
   - order
 
-# videos
+## videos
 - no ddt data
