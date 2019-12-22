@@ -7,7 +7,20 @@ const { keys } = Object;
 
 const migrationsToRun = {
   tags: false,
-  customers: true,
+  customers: false,
+  extractedHosts: false,
+  extractedUrls: false,
+  users: false,
+  orders: false,
+  lineItems: false,
+  urlAcknowledgments: false,
+  campaigns: false,
+  identities: false,
+  emailCategories: false,
+  emailDeployments: false,
+  emailSends: false,
+  emailSendUrls: false,
+  eventEmailClicks: false,
 };
 
 const run = async () => {

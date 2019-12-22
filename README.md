@@ -1,18 +1,20 @@
 # Models / Collections
 
-## ad-creative-trackers
+[x] Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
+
+## ad-creative-trackers (done)
 - no ddt data
 
-## ad-creatives
+## ad-creatives (done)
 - no ddt data
 
-## behavior-entities
+## behavior-entities (done)
 - no ddt data
 
-## behavior-views
+## behavior-views (done)
 - no ddt data
 
-## campaigns
+## campaigns (done)
 - 314 ddt records
 - relationships
   - customerId
@@ -32,13 +34,13 @@
 - models that reference this
   - identity (can be ignored, no data)
 
-## click-requests
+## click-requests (done)
 - can likely ignore
 
-## content-query-results
+## content-query-results (done)
 - can ignore
 
-## customers
+## customers (done)
 - 239 ddt records
 - unique index on `key` field (when not deleted)
 - when a duplicate key is found, merge with IEN customer
@@ -46,14 +48,14 @@
   - parentId
     -  0 records
 - models that reference this
-  - campaign
-  - extracted-host
-  - extracted-url
+  - [x] campaign
+  - [x] extracted-host
+  - [x] extracted-url
   - form (can be ignored, no data)
   - identity (can be ignored, no data)
-  - order
+  - [x] order
 
-## email-categories
+## email-categories (done)
 - 22 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
@@ -61,12 +63,12 @@
     - 21 categories with this field set
     - 6 distinct categoryIds
 - models that reference this
-  - email-category
-  - email-deployment
-  - email-send-url
+  - [x] email-category
+  - [x] email-deployment
+  - [x] email-send-url
   - line-item (can be ignored, no data)
 
-## email-deployments
+## email-deployments (done)
 - 721 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
@@ -74,10 +76,10 @@
     - 721 deployments with this field set
     - 20 distinct categoryIds
 - models that reference this
-  - email-send-url
-  - email-send
+  - [x] email-send-url
+  - [x] email-send
 
-# email-send-urls
+## email-send-urls (done)
 - 31,230 ddt records
 - unique key on sendId, urlId
 - relationships
@@ -90,25 +92,25 @@
   - urlId
     - 5,114 distinct urlIds
 
-# email-sends
+## email-sends (done)
 - 1,308 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
   - deploymentId
     - 721 distinct deploymentIds
 - models that reference this
-  - campaign
-  - email-send-url
-  - event-email-click
+  - [x] campaign
+  - [x] email-send-url
+  - [x] event-email-click
   - line-item (can be ignored, no data)
 
-# errors
+## errors (done)
 - can likely ignore
 
-# event-ad-creatives
+## event-ad-creatives (done)
 - no ddt data
 
-# event-email-clicks
+## event-email-clicks (done)
 - 458,689 ddt records
 - unique index on `day`, `job`, `url`, `usr`
 - relationships
@@ -116,10 +118,10 @@
   - usr (identityId)
   - job (sendId)
 
-# excluded-email-domains
+## excluded-email-domains (done)
 - no ddt data
 
-# extracted-hosts
+## extracted-hosts (done)
 - 129 ddt records
 - unique index on `value`
 - relationships
@@ -129,9 +131,9 @@
   - tagIds
     - 0 hosts with this field set
 - models that reference this
-  - extracted-url
+  - [x] extracted-url
 
-## extracted-urls
+## extracted-urls (done)
 - 6,137 ddt records
 - unique index on `shortId`
 - unique index on `values.original`
@@ -145,22 +147,22 @@
   - tagIds
     - 4,649 urls with this field set
 - models that reference this
-  - campaign
-  - email-send-url
-  - event-email-click
+  - [x] campaign
+  - [x] email-send-url
+  - [x] event-email-click
   - line-item (can ignore, no data)
-  - url-acknowledgment
+  - [x] url-acknowledgment
 
-## form-entries
+## form-entries (done)
 - no ddt data
 
-## forms
+## forms (done)
 - no ddt data
 
-## honey-pots
+## honey-pots (done)
 - can likely ignore
 
-# identities
+## identities (done)
 - 21,871 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - need to determine how to handle "duplicate" email addresses
@@ -172,9 +174,13 @@
   - inactiveLineItemIds
     - 0 records
 - models that reference this
-  - event-email-click
+  - [x] event-email-click
+- api verification
+  - 672 transferrable records were not found in the IEN API
+  - all of these were also not found in the DDT API
+  - conclusion: these were removed from ET entirely
 
-# line-items
+## line-items (done)
 - 3 ddt records
 - relationships
   - orderId
@@ -191,7 +197,7 @@
 - models that reference this
   - identity (can ignore, no data)
 
-# orders
+## orders (done)
 - 3 ddt records
 - relationships
   - customerId
@@ -201,35 +207,35 @@
     - 3 records
     - 2 distinct userIds
 - models that reference this
-  - line-item
+  - [x] line-item
 
-# pings
+## pings (done)
 - can ignore
 
-# tags
+## tags (done)
 - 5 ddt records
 - unique index on `name` (when not deleted)
 - models that reference this
   - campaign (can ignore, no data)
   - extracted-host (can ignore, no data)
-  - extracted-url
+  - [x] extracted-url
   - line-item (can ignore, no data)
 
-# tracked-campaigns
+## tracked-campaigns (done)
 - no ddt data
 
-# url-acknowledgments
+## url-acknowledgments (done)
 - 757 ddt records
 - unique index on `shortId`
 - relationships
   - urlIds
 
-# users
+## users (done)
 - 18 ddt records
 - unique index on `email` (when not deleted)
 - merge with ien records
 - models that reference this
-  - order
+  - [x] order
 
-# videos
+## videos (done)
 - no ddt data
