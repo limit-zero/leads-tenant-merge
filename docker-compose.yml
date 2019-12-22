@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  mongo:
+    tty: true
+    image: mongo:3.4.19
+    restart: always
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "11567:27017"
+
+volumes:
+  mongodb: {}
