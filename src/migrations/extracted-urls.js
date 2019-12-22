@@ -59,8 +59,18 @@ const updateUrlAcknowledgments = async () => {
   });
 };
 
+const updateEventEmailClicks = async () => {
+  const urlMap = await dupeMapper('extracted-urls');
+  await updateRefs.one({
+    resource: 'event-email-clicks',
+    field: 'url',
+    dupeMap: urlMap,
+  });
+};
+
 module.exports = async () => {
   await updateExtractedUrls();
   await updateEmailSendUrls();
   await updateUrlAcknowledgments();
+  await updateEventEmailClicks();
 };
