@@ -8,7 +8,8 @@ const { keys } = Object;
 const migrationsToRun = {
   tags: false,
   customers: false,
-  extractedHosts: true,
+  extractedHosts: false,
+  extractedUrls: true,
 };
 
 const run = async () => {
