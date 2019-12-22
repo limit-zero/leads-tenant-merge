@@ -50,7 +50,17 @@ const updateEmailSendUrls = async () => {
   });
 };
 
+const updateUrlAcknowledgments = async () => {
+  const urlMap = await dupeMapper('extracted-urls');
+  await updateRefs.many({
+    resource: 'url-acknowledgments',
+    field: 'urlIds',
+    dupeMap: urlMap,
+  });
+};
+
 module.exports = async () => {
   await updateExtractedUrls();
   await updateEmailSendUrls();
+  await updateUrlAcknowledgments();
 };
