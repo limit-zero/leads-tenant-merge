@@ -6,21 +6,21 @@ const { log } = console;
 const { keys } = Object;
 
 const collectonsToRun = [
-  // 'campaigns',
-  // 'customers',
-  // 'email-categories',
-  // 'email-deployments',
+  'campaigns',
+  'customers',
+  'email-categories',
+  'email-deployments',
   'email-send-urls',
-  // 'email-sends',
-  // 'event-email-clicks',
-  // 'extracted-hosts',
-  // 'extracted-urls',
-  // 'identities',
-  // 'line-items',
-  // 'orders',
-  // 'tags',
-  // 'url-acknowledgments',
-  // 'users',
+  'email-sends',
+  'event-email-clicks',
+  'extracted-hosts',
+  'extracted-urls',
+  'identities',
+  'line-items',
+  'orders',
+  'tags',
+  'url-acknowledgments',
+  'users',
 ];
 
 const run = async () => {
@@ -40,15 +40,15 @@ const run = async () => {
     const batchSize = 500;
     const batchCount = Math.ceil(numOfDocs / batchSize);
 
-    const skips = [];
+    const batches = [];
     for (let i = 0; i < batchCount; i += 1) {
-      skips.push(i * batchSize);
+      batches.push(i + 1);
     }
 
     log(chalk`Found {yellow ${numOfDocs}} total ${collName}. Running {yellow ${batchCount}} batches...`);
-    await eachSeries(skips, async (skip) => {
-      log('Batch starting...');
-      const cursor = db.collection('ddt', collName).find(filter, { limit: batchSize, skip });
+    await eachSeries(batches, async (n) => {
+      log(`Starting batch ${n} of ${batches.length}`);
+      const cursor = db.collection('ddt', collName).find(filter, { limit: batchSize });
 
       const bulkInsertOps = [];
       const bulkUpdateOps = [];
