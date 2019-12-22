@@ -38,7 +38,7 @@
 ## content-query-results
 - can ignore
 
-## customers
+## customers (done)
 - 239 ddt records
 - unique index on `key` field (when not deleted)
 - when a duplicate key is found, merge with IEN customer
@@ -119,7 +119,7 @@
 ## excluded-email-domains
 - no ddt data
 
-## extracted-hosts
+## extracted-hosts (done)
 - 129 ddt records
 - unique index on `value`
 - relationships
@@ -146,10 +146,10 @@
     - 4,649 urls with this field set
 - models that reference this
   - campaign
-  - email-send-url
+  - [x] email-send-url
   - event-email-click
   - line-item (can ignore, no data)
-  - url-acknowledgment
+  - [x] url-acknowledgment
 
 ## form-entries
 - no ddt data
@@ -206,7 +206,7 @@
 ## pings
 - can ignore
 
-## tags
+## tags (done)
 - 5 ddt records
 - unique index on `name` (when not deleted)
 - models that reference this
