@@ -8,6 +8,7 @@ const lineItems = require('./line-items');
 const urlAcknowledgments = require('./url-acknowledgments');
 const campaigns = require('./campaigns');
 const identities = require('./identities');
+const emailCategories = require('./email-categories');
 
 module.exports = {
   tags,
@@ -20,4 +21,5 @@ module.exports = {
   urlAcknowledgments,
   campaigns,
   identities,
+  emailCategories,
 };

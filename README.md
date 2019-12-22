@@ -55,7 +55,7 @@
   - identity (can be ignored, no data)
   - [x] order
 
-## email-categories
+## email-categories (done)
 - 22 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - relationships
@@ -63,9 +63,9 @@
     - 21 categories with this field set
     - 6 distinct categoryIds
 - models that reference this
-  - email-category
-  - email-deployment
-  - email-send-url
+  - [x] email-category
+  - [x] email-deployment
+  - [x] email-send-url
   - line-item (can be ignored, no data)
 
 ## email-deployments
