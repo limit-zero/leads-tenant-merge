@@ -51,9 +51,7 @@ const many = async ({ resource, field, dupeMap }) => {
   await db.iterateCursor(cursor, (doc) => {
     const newRefIds = doc[field].map((refId) => {
       const ids = dupeMap.get(`${refId}`);
-      if (ids) {
-        return ids.ienId;
-      }
+      if (ids) return ids.ienId;
       return refId;
     });
     const $set = { [`migrate.fields.${field}`]: newRefIds };
