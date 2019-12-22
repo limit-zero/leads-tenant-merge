@@ -10,7 +10,10 @@ const migrationsToRun = {
   customers: false,
   extractedHosts: false,
   extractedUrls: false,
-  users: true,
+  users: false,
+  orders: true,
+  lineItems: true,
+  urlAcknowledgments: true,
 };
 
 const run = async () => {
