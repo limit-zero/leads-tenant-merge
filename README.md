@@ -176,7 +176,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 - models that reference this
   - event-email-click
 
-## line-items
+## line-items (done)
 - 3 ddt records
 - relationships
   - orderId
@@ -193,7 +193,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 - models that reference this
   - identity (can ignore, no data)
 
-## orders
+## orders (done)
 - 3 ddt records
 - relationships
   - customerId
@@ -203,7 +203,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
     - 3 records
     - 2 distinct userIds
 - models that reference this
-  - line-item
+  - [x] line-item
 
 ## pings (done)
 - can ignore
@@ -220,7 +220,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 ## tracked-campaigns (done)
 - no ddt data
 
-## url-acknowledgments
+## url-acknowledgments (done)
 - 757 ddt records
 - unique index on `shortId`
 - relationships
