@@ -1,5 +1,7 @@
 # Models / Collections
 
+Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
+
 ## ad-creative-trackers
 - no ddt data
 
