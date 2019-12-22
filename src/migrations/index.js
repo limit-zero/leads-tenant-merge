@@ -7,6 +7,7 @@ const orders = require('./orders');
 const lineItems = require('./line-items');
 const urlAcknowledgments = require('./url-acknowledgments');
 const campaigns = require('./campaigns');
+const identities = require('./identities');
 
 module.exports = {
   tags,
@@ -18,4 +19,5 @@ module.exports = {
   lineItems,
   urlAcknowledgments,
   campaigns,
+  identities,
 };

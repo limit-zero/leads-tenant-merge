@@ -1,6 +1,6 @@
 # Models / Collections
 
-Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
+[ ] Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one process.
 
 ## ad-creative-trackers (done)
 - no ddt data
@@ -14,7 +14,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 ## behavior-views (done)
 - no ddt data
 
-## campaigns
+## campaigns (done)
 - 314 ddt records
 - relationships
   - customerId
@@ -162,7 +162,7 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
 ## honey-pots (done)
 - can likely ignore
 
-## identities
+## identities (done)
 - 21,871 ddt records
 - externalSource.identifier values will need to be handled for DDT BU
 - need to determine how to handle "duplicate" email addresses
@@ -174,7 +174,11 @@ Note: must handle campaign.excludeUrls `urlId` and `sendId` together in one proc
   - inactiveLineItemIds
     - 0 records
 - models that reference this
-  - event-email-click
+  - [x] event-email-click
+- api verification
+  - 672 transferrable records were not found in the IEN API
+  - all of these were also not found in the DDT API
+  - conclusion: these were removed from ET entirely
 
 ## line-items (done)
 - 3 ddt records
