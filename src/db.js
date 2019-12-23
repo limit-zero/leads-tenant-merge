@@ -1,11 +1,39 @@
 const { MongoClient } = require('mongodb');
-const { MONGO_DSN_IEN, MONGO_DSN_DDT } = require('./env');
+const {
+  DB_HOST,
 
-const clientOptions = { useUnifiedTopology: true };
+  IEN_DB_USER,
+  IEN_DB_PASS,
+  IEN_DB_AUTH,
+  IEN_DB_NAME,
+
+  DDT_DB_USER,
+  DDT_DB_PASS,
+  DDT_DB_AUTH,
+  DDT_DB_NAME,
+} = require('./env');
+
+const createDbName = tenant => (tenant === 'ien' ? IEN_DB_NAME : DDT_DB_NAME);
+
+const createClient = (tenant) => {
+  const dbName = createDbName(tenant);
+  const dsn = `mongodb://${DB_HOST}/${dbName}`;
+  const options = {
+    useUnifiedTopology: true,
+    authSource: (tenant === 'ien' ? IEN_DB_AUTH : DDT_DB_AUTH) || undefined,
+    user: tenant === 'ien' ? IEN_DB_USER : DDT_DB_USER,
+    password: tenant === 'ien' ? IEN_DB_PASS : DDT_DB_PASS,
+    replicaSet: 'apps',
+    readPreference: 'primaryPreferred',
+    w: 3,
+    connectTimeoutMS: 1000,
+  };
+  return new MongoClient(dsn, options);
+};
 
 const clients = {
-  ddt: new MongoClient(MONGO_DSN_DDT, clientOptions),
-  ien: new MongoClient(MONGO_DSN_IEN, clientOptions),
+  ddt: createClient('ddt'),
+  ien: createClient('ien'),
 };
 
 const connect = () => Promise.all([
@@ -21,7 +49,7 @@ const close = force => Promise.all([
 const collection = (tenant, name) => {
   const client = clients[tenant];
   if (!client) throw new Error('No mongodb client found for the provided tenant');
-  const dbName = tenant === 'ien' ? 'leads-graph' : 'leads-graph-ddt';
+  const dbName = createDbName(tenant);
   return client.db(dbName).collection(name);
 };
 
@@ -38,4 +66,5 @@ module.exports = {
   close,
   collection,
   iterateCursor,
+  clients,
 };
